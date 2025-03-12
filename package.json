@@ -1,7 +1,18 @@
 {
-  "dependencies": { "dotenv": "^16.4.7", "drizzle-orm": "^0.40.0", "hono": "^4.7.4", "pg": "^8.14.0" },
+  "scripts": {
+    "dbml": "tsx ./src/database/dbml.ts",
+    "studio": "bun drizzle-kit studio",
+    "docker:up": "sudo docker compose up -d"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.40.0",
+    "hono": "^4.7.4",
+    "pg": "^8.14.0"
+  },
   "devDependencies": {
     "@types/pg": "^8.11.11",
+    "drizzle-dbml-generator": "^0.10.0",
     "drizzle-kit": "^0.30.5",
     "tsx": "^4.19.3"
   }
