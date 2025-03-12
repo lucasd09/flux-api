@@ -9,9 +9,6 @@ const app = new Hono();
 app.use(logger());
 app.use(cors());
 
-// Default Routes
-app.get("/", (c) => c.json({ message: "Welcome to Hono API!" }));
-
 //routes
 app.route("/companies", companyController);
 

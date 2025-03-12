@@ -10,12 +10,14 @@ export type UpdateCompanyDto = Omit<Partial<CreateCompanyDto>, "id">;
 
 export const createCompanySchema = z.object({
   name: z.string().min(2).max(255),
+  slug: z.string().min(2).max(255),
   logo: z.string().max(255).optional(),
   active: z.boolean().optional(),
 });
 
 export const updateCompanySchema = z.object({
   name: z.string().min(2).max(255).optional(),
+  slug: z.string().min(2).max(255).optional(),
   logo: z.string().max(255).optional(),
   active: z.boolean().optional(),
 });

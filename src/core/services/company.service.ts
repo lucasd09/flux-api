@@ -1,5 +1,9 @@
 import { NotFoundError, ConflictError } from "../../utils/errors";
-import { CreateCompanyDto, UpdateCompanyDto } from "../models/company.model";
+import {
+  Company,
+  CreateCompanyDto,
+  UpdateCompanyDto,
+} from "../models/company.model";
 import { CompanyRepository } from "../repositories/company.repository";
 
 export class CompanyService {
@@ -9,11 +13,11 @@ export class CompanyService {
     this.companyRepository = new CompanyRepository();
   }
 
-  async getAllCompanies(includeInactive = false) {
+  async getAllCompanies(includeInactive = false): Promise<Company[]> {
     return await this.companyRepository.findAll(includeInactive);
   }
 
-  async getCompanyById(id: string) {
+  async getCompanyById(id: string): Promise<Company> {
     const company = await this.companyRepository.findById(id);
 
     if (!company) {
@@ -23,7 +27,7 @@ export class CompanyService {
     return company;
   }
 
-  async getCompanyBySlug(slug: string) {
+  async getCompanyBySlug(slug: string): Promise<Company> {
     const company = await this.companyRepository.findBySlug(slug);
 
     if (!company) {
@@ -33,7 +37,7 @@ export class CompanyService {
     return company;
   }
 
-  async createCompany(data: CreateCompanyDto) {
+  async createCompany(data: CreateCompanyDto): Promise<Company> {
     try {
       return await this.companyRepository.create(data);
     } catch (error) {
@@ -47,7 +51,7 @@ export class CompanyService {
     }
   }
 
-  async updateCompany(id: string, data: UpdateCompanyDto) {
+  async updateCompany(id: string, data: UpdateCompanyDto): Promise<Company> {
     await this.getCompanyById(id);
 
     try {
@@ -63,19 +67,19 @@ export class CompanyService {
     }
   }
 
-  async deleteCompany(id: string) {
+  async deleteCompany(id: string): Promise<Company> {
     await this.getCompanyById(id);
 
     return await this.companyRepository.delete(id);
   }
 
-  async deactivateCompany(id: string) {
+  async deactivateCompany(id: string): Promise<Company> {
     await this.getCompanyById(id);
 
     return await this.companyRepository.deactivate(id);
   }
 
-  async activateCompany(id: string) {
+  async activateCompany(id: string): Promise<Company> {
     await this.getCompanyById(id);
 
     return await this.companyRepository.activate(id);

@@ -9,7 +9,7 @@ import {
 import { slugify } from "../../utils/helpers";
 
 export class CompanyRepository {
-  async findAll(includeInactive = false) {
+  async findAll(includeInactive = false): Promise<Company[]> {
     const query = includeInactive
       ? db.select().from(companiesTable)
       : db.select().from(companiesTable).where(eq(companiesTable.active, true));
@@ -17,7 +17,7 @@ export class CompanyRepository {
     return await query;
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<Company> {
     const result = await db
       .select()
       .from(companiesTable)
@@ -27,7 +27,7 @@ export class CompanyRepository {
     return result[0] || null;
   }
 
-  async findBySlug(slug: string) {
+  async findBySlug(slug: string): Promise<Company> {
     const result = await db
       .select()
       .from(companiesTable)
@@ -37,7 +37,7 @@ export class CompanyRepository {
     return result[0] || null;
   }
 
-  async create(data: CreateCompanyDto) {
+  async create(data: CreateCompanyDto): Promise<Company> {
     const slug = slugify(data.name);
 
     const result = await db
@@ -67,7 +67,7 @@ export class CompanyRepository {
     return result[0];
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<Company> {
     const result = await db
       .delete(companiesTable)
       .where(eq(companiesTable.id, id))
@@ -76,11 +76,11 @@ export class CompanyRepository {
     return result[0];
   }
 
-  async deactivate(id: string) {
+  async deactivate(id: string): Promise<Company> {
     return this.update(id, { active: false });
   }
 
-  async activate(id: string) {
+  async activate(id: string): Promise<Company> {
     return this.update(id, { active: true });
   }
 }
