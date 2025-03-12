@@ -1,14 +1,17 @@
 {
   "scripts": {
+    "dev": "bun run --watch src/server.ts",
     "dbml": "tsx ./src/database/dbml.ts",
     "studio": "bun drizzle-kit studio",
     "docker:up": "sudo docker compose up -d"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.4.3",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
     "hono": "^4.7.4",
-    "pg": "^8.14.0"
+    "pg": "^8.14.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/pg": "^8.11.11",
