@@ -11,7 +11,7 @@ const companyService = new CompanyService();
 
 companyController.get("/", async (c) => {
   const includeInactive = c.req.query("includeInactive") === "true";
-  const companies = await companyService.getAllCompanies(includeInactive);
+  const companies = await companyService.findAll(includeInactive);
 
   return c.json({
     success: true,
@@ -22,7 +22,7 @@ companyController.get("/", async (c) => {
 companyController.get("/:id", async (c) => {
   try {
     const id = c.req.param("id");
-    const company = await companyService.getCompanyById(id);
+    const company = await companyService.findById(id);
 
     return c.json({
       success: true,
@@ -39,7 +39,7 @@ companyController.get("/:id", async (c) => {
 companyController.get("/slug/:slug", async (c) => {
   try {
     const slug = c.req.param("slug");
-    const company = await companyService.getCompanyBySlug(slug);
+    const company = await companyService.findBySlug(slug);
 
     return c.json({
       success: true,
@@ -59,7 +59,7 @@ companyController.post(
   async (c) => {
     try {
       const data = await c.req.json();
-      const company = await companyService.createCompany(data);
+      const company = await companyService.create(data);
 
       return c.json(
         {
@@ -84,7 +84,7 @@ companyController.put(
     try {
       const id = c.req.param("id");
       const data = await c.req.json();
-      const company = await companyService.updateCompany(id, data);
+      const company = await companyService.update(id, data);
 
       return c.json({
         success: true,
@@ -105,7 +105,7 @@ companyController.put(
 companyController.delete("/:id", async (c) => {
   try {
     const id = c.req.param("id");
-    await companyService.deleteCompany(id);
+    await companyService.delete(id);
 
     return c.json({
       success: true,
@@ -122,7 +122,7 @@ companyController.delete("/:id", async (c) => {
 companyController.patch("/:id/deactivate", async (c) => {
   try {
     const id = c.req.param("id");
-    const company = await companyService.deactivateCompany(id);
+    const company = await companyService.deactivate(id);
 
     return c.json({
       success: true,
@@ -139,7 +139,7 @@ companyController.patch("/:id/deactivate", async (c) => {
 companyController.patch("/:id/activate", async (c) => {
   try {
     const id = c.req.param("id");
-    const company = await companyService.activateCompany(id);
+    const company = await companyService.activate(id);
 
     return c.json({
       success: true,

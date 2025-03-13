@@ -13,11 +13,11 @@ export class CompanyService {
     this.companyRepository = new CompanyRepository();
   }
 
-  async getAllCompanies(includeInactive = false): Promise<Company[]> {
+  async findAll(includeInactive = false): Promise<Company[]> {
     return await this.companyRepository.findAll(includeInactive);
   }
 
-  async getCompanyById(id: string): Promise<Company> {
+  async findById(id: string): Promise<Company> {
     const company = await this.companyRepository.findById(id);
 
     if (!company) {
@@ -27,7 +27,7 @@ export class CompanyService {
     return company;
   }
 
-  async getCompanyBySlug(slug: string): Promise<Company> {
+  async findBySlug(slug: string): Promise<Company> {
     const company = await this.companyRepository.findBySlug(slug);
 
     if (!company) {
@@ -37,7 +37,7 @@ export class CompanyService {
     return company;
   }
 
-  async createCompany(data: CreateCompanyDto): Promise<Company> {
+  async create(data: CreateCompanyDto): Promise<Company> {
     try {
       return await this.companyRepository.create(data);
     } catch (error) {
@@ -51,8 +51,8 @@ export class CompanyService {
     }
   }
 
-  async updateCompany(id: string, data: UpdateCompanyDto): Promise<Company> {
-    await this.getCompanyById(id);
+  async update(id: string, data: UpdateCompanyDto): Promise<Company> {
+    await this.findById(id);
 
     try {
       return await this.companyRepository.update(id, data);
@@ -67,20 +67,20 @@ export class CompanyService {
     }
   }
 
-  async deleteCompany(id: string): Promise<Company> {
-    await this.getCompanyById(id);
+  async delete(id: string): Promise<Company> {
+    await this.findById(id);
 
     return await this.companyRepository.delete(id);
   }
 
-  async deactivateCompany(id: string): Promise<Company> {
-    await this.getCompanyById(id);
+  async deactivate(id: string): Promise<Company> {
+    await this.findById(id);
 
     return await this.companyRepository.deactivate(id);
   }
 
-  async activateCompany(id: string): Promise<Company> {
-    await this.getCompanyById(id);
+  async activate(id: string): Promise<Company> {
+    await this.findById(id);
 
     return await this.companyRepository.activate(id);
   }
