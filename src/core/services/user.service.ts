@@ -81,4 +81,16 @@ export class UserService {
     await this.findById(id);
     return await this.repository.deactivate(id);
   }
+
+  async assignRoleToUser(userId: string, roleId: string) {
+    return await this.repository.assignRole(userId, roleId);
+  }
+
+  async removeRoleFromUser(userId: string, roleId: string) {
+    return await this.repository.removeRole(userId, roleId);
+  }
+
+  async getUserRoles(userId: string) {
+    return await this.repository.getRoles(userId);
+  }
 }
