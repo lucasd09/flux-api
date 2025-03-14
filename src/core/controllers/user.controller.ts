@@ -1,7 +1,11 @@
 import { Hono } from "hono";
 import { UserService } from "../services/user.service";
 import { zValidator } from "@hono/zod-validator";
-import { createUserSchema, updateUserSchema } from "../models/user.model";
+import {
+  UserRoleSchema,
+  createUserSchema,
+  updateUserSchema,
+} from "../models/user.model";
 
 const userController = new Hono();
 const userService = new UserService();
@@ -102,5 +106,60 @@ userController.patch("/:id/activate", async (c) => {
     );
   }
 });
+
+userController.get("/roles/:id", async (c) => {
+  try {
+    const id = c.req.param("id");
+    const user = await userService.getUserRoles(id);
+    return c.json({ success: true, data: user });
+  } catch (error) {
+    return c.json(
+      { success: false, message: error.message },
+      error.status || 500,
+    );
+  }
+});
+
+userController.post(
+  "/roles/assign",
+  zValidator("json", UserRoleSchema),
+  async (c) => {
+    try {
+      const data = await c.req.json();
+      const userRole = await userService.assignRoleToUser(
+        data.userId,
+        data.roleId,
+      );
+
+      return c.json({ success: true, data: userRole });
+    } catch (error) {
+      return c.json(
+        { success: false, message: error.message },
+        error.status || 500,
+      );
+    }
+  },
+);
+
+userController.post(
+  "/roles/remove",
+  zValidator("json", UserRoleSchema),
+  async (c) => {
+    try {
+      const data = await c.req.json();
+      const userRole = await userService.removeRoleFromUser(
+        data.userId,
+        data.roleId,
+      );
+
+      return c.json({ success: true, data: userRole });
+    } catch (error) {
+      return c.json(
+        { success: false, message: error.message },
+        error.status || 500,
+      );
+    }
+  },
+);
 
 export { userController };

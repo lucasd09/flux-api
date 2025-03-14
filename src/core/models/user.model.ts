@@ -27,3 +27,8 @@ export const updateUserSchema = z.object({
   avatar: z.string().optional(),
   companyId: z.string(),
 });
+
+export const UserRoleSchema = z.object({
+  userId: z.string(),
+  roleId: z.string(),
+});
