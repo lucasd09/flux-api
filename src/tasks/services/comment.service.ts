@@ -8,23 +8,23 @@ export class CommentService {
     this.repository = new CommentRepository();
   }
 
-  async getCommentsByTask(taskId: string) {
+  async getByTask(taskId: string) {
     return await this.repository.findAllByTask(taskId);
   }
 
-  async getComment(id: string) {
+  async get(id: string) {
     return await this.repository.findById(id);
   }
 
-  async createComment(data: CreateCommentDto) {
+  async create(data: CreateCommentDto) {
     return await this.repository.create(data);
   }
 
-  async updateComment(id: string, data: UpdateCommentDto) {
+  async update(id: string, data: UpdateCommentDto) {
     return await this.repository.update(id, data);
   }
 
-  async deleteComment(id: string) {
+  async delete(id: string) {
     return await this.repository.delete(id);
   }
 }
