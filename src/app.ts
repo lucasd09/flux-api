@@ -10,14 +10,18 @@ import { labelController } from "./tasks/controllers/label.controller";
 import { commentController } from "./tasks/controllers/comment.controller";
 import { taskController } from "./tasks/controllers/task.controller";
 import { teamController } from "./tasks/controllers/team.controller";
+import authController from "./auth/controllers/auth.controller";
+import { jwtMiddleware } from "./middlewares/jwt";
 
 const app = new Hono();
 
 // Middlewares
 app.use(logger());
 app.use(cors());
+jwtMiddleware(app);
 
 //routes - auth
+app.route("/auth", authController);
 
 //routes - core
 app.route("/companies", companyController);

@@ -5,6 +5,7 @@ import {
   CreateUserDto,
   ReadUserDto,
   UpdateUserDto,
+  User,
 } from "../models/user.model";
 
 export class UserRepository {
@@ -20,7 +21,7 @@ export class UserRepository {
     return result || null;
   }
 
-  async findByEmail(email: string): Promise<ReadUserDto | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const result = await db.query.usersTable.findFirst({
       where: (users, { eq }) => eq(users.email, email),
     });
