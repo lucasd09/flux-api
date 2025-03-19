@@ -6,6 +6,9 @@ export const jwtMiddleware = (app: Hono) => {
     if (c.req.path.startsWith("/auth/")) {
       return next();
     }
+    if (c.req.path.startsWith("/docs/")) {
+      return next();
+    }
 
     return jwt({ secret: process.env.JWT_SECRET || "" })(c, next);
   });
