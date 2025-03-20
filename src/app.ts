@@ -18,13 +18,14 @@ const app = new Hono();
 // Middlewares
 app.use(logger());
 app.use(cors());
+
+//routes - public
+app.route("/auth", authController);
+app.route("/companies", companyController);
+
 jwtMiddleware(app);
 
-//routes - auth
-app.route("/auth", authController);
-
 //routes - core
-app.route("/companies", companyController);
 app.route("/users", userController);
 app.route("/roles", roleController);
 app.route("/permissions", permissionController);
